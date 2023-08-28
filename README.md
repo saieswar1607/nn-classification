@@ -68,11 +68,11 @@ import numpy as np
 import matplotlib.pylab as plt
 import sklearn.metrics as metrics
 ```
-## Importing the dataset
+### Importing the dataset
 ```
 customer_df = pd.read_csv('customers.csv')
 ```
-## Data exploration
+### Data exploration
 ```
 customer_df.columns
 customer_df.dtypes
@@ -107,7 +107,7 @@ customers_1[['Gender',
                                                                  'Spending_Score']])
 
 ```
-## Encoding of output values
+### Encoding of output values
 ```
 le = LabelEncoder()
 customers_1['Segmentation'] = le.fit_transform(customers_1['Segmentation'])
@@ -120,14 +120,14 @@ one_hot_enc = OneHotEncoder()
 one_hot_enc.fit(y1)
 y = one_hot_enc.transform(y1).toarray()
 ```
-## Spliting the data
+### Spliting the data
 ```
 X_train,X_test,y_train,y_test=train_test_split(X,y,
                                                test_size=0.33,
                                                random_state=50)
 X_train.shape
 ```
-## Scaling the features of input
+### Scaling the features of input
 ```
 scaler_age = MinMaxScaler()
 scaler_age.fit(X_train[:,2].reshape(-1,1))
@@ -150,14 +150,14 @@ ai_brain.fit(x=X_train_scaled,y=y_train,
              validation_data=(X_test_scaled,y_test),
              )
 ```
-## Ploting the metrics
+### Ploting the metrics
 ```
 metrics = pd.DataFrame(ai_brain.history.history)
 metrics.head()
 metrics[['accuracy','val_accuracy']].plot()
 metrics[['loss','val_loss']].plot()
 ```
-## Making the prediction
+### Making the prediction
 ```
 x_test_predictions = np.argmax(ai_brain.predict(X_test_scaled), axis=1)
 x_test_predictions.shape
@@ -166,7 +166,7 @@ y_test_truevalue.shape
 print(confusion_matrix(y_test_truevalue,x_test_predictions))
 print(classification_report(y_test_truevalue,x_test_predictions)
 ```
-## Saving and loading the model
+### Saving and loading the model
 ```
 ai_brain.save('customer_classification_model.h5')
 with open('customer_data.pickle', 'wb') as fh:
@@ -175,13 +175,13 @@ ai_brain = load_model('customer_classification_model.h5')
 with open('customer_data.pickle', 'rb') as fh:
    [X_train_scaled,y_train,X_test_scaled,y_test,customers_1,customer_df_cleaned,scaler_age,enc,one_hot_enc,le]=pickle.load(fh)
 ```
-## Making the prediction for single input
+### Making the prediction for single input
 ```
 x_single_prediction = np.argmax(ai_brain.predict(X_test_scaled[1:2,:]), axis=1)
 print(x_single_prediction)
 print(le.inverse_transform(x_single_prediction))
 ```
-## Dataset Information
+### Dataset Information
 
 <img width="838" alt="Dataset" src="https://github.com/saieswar1607/nn-classification/assets/93427011/ce70f2eb-08be-4067-8885-75697fb6176b">
 
